@@ -52,6 +52,8 @@
     }
 
     function redirectNow() {
+      const params = new URLSearchParams(window.location.search || "");
+      const debug = params.get("debug") === "1";
       const target = detectTarget();
       const url = getUrlForTarget(target);
 
@@ -60,8 +62,13 @@
 
       const status = document.getElementById("status");
       if (target === "ios") status.textContent = "Detectado iPhone/iPad. Redirigiendo a App Store…";
-      else if (target === "android") status.textContent = "Detectado Android. Redirigiendo a Google Play…";
+      else if (target === "android") status.textContent = "Detectado Android. Abriendo enlace Android…";
       else status.textContent = "Dispositivo no reconocido. Abriendo web…";
+
+      if (debug) {
+        status.textContent = `DEBUG: target=${target} url=${url}`;
+        return;
+      }
 
       window.location.replace(url);
     }
