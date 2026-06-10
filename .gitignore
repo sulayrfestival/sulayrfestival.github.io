@@ -10,6 +10,7 @@ Thumbs.db
 
 # Outputs
 *.png
+!Sulayr Festival.png
 *.jpg
 *.jpeg
 *.webp
