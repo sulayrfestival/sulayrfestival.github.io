@@ -11,7 +11,9 @@ Thumbs.db
 # Outputs
 *.png
 !Sulayr Festival.png
-!app-release.apk
+!Sulayr Festival.apk
+*.idsig
+*.jks
 *.jpg
 *.jpeg
 *.webp
