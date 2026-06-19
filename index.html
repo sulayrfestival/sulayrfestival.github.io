@@ -141,6 +141,18 @@
       font-size: 13px;
     }
 
+    .steps {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .steps li {
+      margin-bottom: 6px;
+    }
+
     .actions {
       display: grid;
       grid-template-columns: 1fr;
@@ -219,7 +231,13 @@
         <p id="status">Redirigiendo a la app…</p>
       </div>
 
-      <p class="hint">Si no se abre automáticamente, elige tu dispositivo:</p>
+      <p class="hint">Si no se abre automáticamente, sigue estos pasos:</p>
+
+      <ol class="steps">
+        <li>Pulsa <strong>Descargar APK (Android)</strong>.</li>
+        <li>Abre el archivo descargado desde <strong>Descargas</strong>.</li>
+        <li>Si aparece Play Protect, toca <strong>Instalar de todos modos</strong>.</li>
+      </ol>
 
       <div class="actions">
         <a class="button primary" id="btn-ios" href="#" rel="noopener">Abrir en App Store</a>
@@ -259,8 +277,8 @@
       document.getElementById("btn-android").href = PLAY_STORE_URL;
 
       const status = document.getElementById("status");
-      if (target === "ios") status.textContent = "Detectado iPhone/iPad. Redirigiendo a App Store…";
-      else if (target === "android") status.textContent = "Detectado Android. Descargando la app…";
+      if (target === "ios") status.textContent = "Detectado iPhone/iPad. Abriendo App Store…";
+      else if (target === "android") status.textContent = "Detectado Android. Descargando APK…";
       else status.textContent = "Dispositivo no reconocido. Abriendo web…";
 
       if (debug) {
