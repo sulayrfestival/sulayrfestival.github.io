@@ -126,6 +126,25 @@
       flex: 0 0 auto;
     }
 
+    .spinner.is-done {
+      animation: none;
+      border-color: rgba(225, 6, 0, 0.18);
+      background: rgba(225, 6, 0, 0.08);
+      position: relative;
+    }
+
+    .spinner.is-done::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 22px;
+      border-right: 3px solid var(--red);
+      border-bottom: 3px solid var(--red);
+      transform: rotate(45deg);
+      top: 8px;
+      left: 15px;
+    }
+
     @keyframes spin { to { transform: rotate(360deg); } }
 
     #status {
@@ -139,18 +158,6 @@
       margin: 10px 0 0;
       color: var(--muted);
       font-size: 13px;
-    }
-
-    .steps {
-      margin: 10px 0 0;
-      padding-left: 18px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .steps li {
-      margin-bottom: 6px;
     }
 
     .actions {
@@ -177,7 +184,7 @@
 
     a.button:hover { transform: translateY(-1px); border-color: rgba(17, 17, 23, 0.20); }
 
-    a.button.primary {
+    a.button.is-primary {
       background: linear-gradient(135deg, rgba(225, 6, 0, 1), rgba(255, 42, 42, 1));
       border-color: rgba(225, 6, 0, 0.55);
       color: #ffffff;
@@ -231,16 +238,10 @@
         <p id="status">Redirigiendo a la app…</p>
       </div>
 
-      <p class="hint">Si no se abre automáticamente, sigue estos pasos:</p>
-
-      <ol class="steps">
-        <li>Pulsa <strong>Descargar APK (Android)</strong>.</li>
-        <li>Abre el archivo descargado desde <strong>Descargas</strong>.</li>
-        <li>Si aparece Play Protect, toca <strong>Instalar de todos modos</strong>.</li>
-      </ol>
+      <p class="hint">Si no se abre automáticamente, elige tu dispositivo:</p>
 
       <div class="actions">
-        <a class="button primary" id="btn-ios" href="#" rel="noopener">Abrir en App Store</a>
+        <a class="button" id="btn-ios" href="#" rel="noopener">Abrir en App Store</a>
         <a class="button" id="btn-android" href="#" rel="noopener">Descargar APK (Android)</a>
       </div>
     </div>
@@ -273,12 +274,20 @@
       const target = detectTarget();
       const url = getUrlForTarget(target);
 
-      document.getElementById("btn-ios").href = APP_STORE_URL;
-      document.getElementById("btn-android").href = PLAY_STORE_URL;
+      const iosButton = document.getElementById("btn-ios");
+      const androidButton = document.getElementById("btn-android");
+      iosButton.href = APP_STORE_URL;
+      androidButton.href = PLAY_STORE_URL;
+
+      iosButton.classList.toggle("is-primary", target === "ios");
+      androidButton.classList.toggle("is-primary", target === "android");
+
+      const spinner = document.querySelector(".spinner");
+      spinner.classList.add("is-done");
 
       const status = document.getElementById("status");
-      if (target === "ios") status.textContent = "Detectado iPhone/iPad. Abriendo App Store…";
-      else if (target === "android") status.textContent = "Detectado Android. Descargando APK…";
+      if (target === "ios") status.textContent = "iPhone detectado. App Store lista.";
+      else if (target === "android") status.textContent = "Android detectado. APK lista.";
       else status.textContent = "Dispositivo no reconocido. Abriendo web…";
 
       if (debug) {
